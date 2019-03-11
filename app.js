@@ -6,6 +6,7 @@ try {
 
     let masterArray = [];
 
+    // go through each file, format data so we can sort and display it
     filenames.forEach(file => {
         // get the data
         const data = fs.readFileSync(file, 'utf8');
@@ -57,12 +58,13 @@ try {
 
     });
 
+    // flatten to arrays within one parent array
     masterArray = masterArray.flat(1);
 
     //COMMENT ONE OF THE FOUR FOLLOWING LINES IN TO DETERMINE SORTING METHOD
     // masterArray = sortByGenderThenLastName(masterArray);
     // masterArray = sortByDate(masterArray);
-    // masterArray = sortByLastNameDescending(masterArray);
+    masterArray = sortByLastNameDescending(masterArray);
     // masterArray = sortByLastNameAscending(masterArray);
 
     formatDateForConsole(masterArray);
