@@ -84,6 +84,7 @@ function sortByGenderThenLastName(inData) {
         let lastName1 = a[0];
         let lastName2 = b[0];
 
+        // sort returns boolean values, so compare the names and set which one should go first
         return lastName1 > lastName2 ? 1 : -1;
     })
 
@@ -92,6 +93,7 @@ function sortByGenderThenLastName(inData) {
         let lastName1 = a[0];
         let lastName2 = b[0];
 
+        // sort returns boolean values, so compare the names and set which one should go first
         return lastName1 > lastName2 ? 1 : -1;
     });
 
