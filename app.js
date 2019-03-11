@@ -12,9 +12,6 @@ try {
         // split the strings into an array of strings
         const arr = data.split('\n');
 
-        // console.log(data)
-
-
         // go through the strings, cut out suffixes
         const cleanArr = arr.map(function (el) {
 
@@ -58,20 +55,52 @@ try {
 
         masterArray.push(cleanArr);
 
-
-
-        // console.log(masterArray)
-
-
-
     });
 
     masterArray = masterArray.flat(1);
 
-
-    console.log(masterArray)
+    sortByGenderThenLastName(masterArray);
 
 } catch (e) {
     console.log('Error:', e.stack);
 }
+
+function sortByGenderThenLastName(inData) {
+    // create empty arrays that we will add to
+    const femaleArray = [];
+    const maleArray = [];
+
+    // separate the data by gender
+    inData.forEach(el => {
+        let currentGender = el[2];
+
+        if (currentGender === "FEMALE") {
+            femaleArray.push(el);
+        } else maleArray.push(el);
+    });
+
+    // sort female array by last name
+    femaleArray.sort(function (a, b) {
+        let lastName1 = a[0];
+        let lastName2 = b[0];
+
+        return lastName1 > lastName2 ? 1 : -1;
+    })
+
+    // sort male array by last name
+    maleArray.sort(function (a, b) {
+        let lastName1 = a[0];
+        let lastName2 = b[0];
+
+        return lastName1 > lastName2 ? 1 : -1;
+    });
+
+    // concatenate male and female array, females first
+    const joinedSortedArray = femaleArray.concat(maleArray);
+
+    console.log("joined ", joinedSortedArray);
+    return joinedSortedArray;
+};
+
+
 
