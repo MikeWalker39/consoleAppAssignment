@@ -67,8 +67,8 @@ try {
 
 function sortByGenderThenLastName(inData) {
     // create empty arrays that we will add to
-    const femaleArray = [];
-    const maleArray = [];
+    let femaleArray = [];
+    let maleArray = [];
 
     // separate the data by gender
     inData.forEach(el => {
@@ -80,22 +80,10 @@ function sortByGenderThenLastName(inData) {
     });
 
     // sort female array by last name
-    femaleArray.sort(function (a, b) {
-        let lastName1 = a[0];
-        let lastName2 = b[0];
-
-        // sort returns boolean values, so compare the names and set which one should go first
-        return lastName1 > lastName2 ? 1 : -1;
-    })
+    femaleArray = sortByLastName(femaleArray);
 
     // sort male array by last name
-    maleArray.sort(function (a, b) {
-        let lastName1 = a[0];
-        let lastName2 = b[0];
-
-        // sort returns boolean values, so compare the names and set which one should go first
-        return lastName1 > lastName2 ? 1 : -1;
-    });
+    maleArray = sortByLastName(maleArray);
 
     // concatenate male and female array, females first
     const joinedSortedArray = femaleArray.concat(maleArray);
@@ -104,5 +92,20 @@ function sortByGenderThenLastName(inData) {
     return joinedSortedArray;
 };
 
+function sortByLastName(inData){
+    // sort male array by last name
+    inData.sort(function (a, b) {
+        let lastName1 = a[0];
+        let lastName2 = b[0];
 
+        // sort returns boolean values, so compare the names and set which one should go first
+        return lastName1 > lastName2 ? 1 : -1;
+    });
+
+    return inData;
+}
+
+function sortByDate(inData){
+
+}
 
