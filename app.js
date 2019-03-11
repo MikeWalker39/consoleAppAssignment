@@ -59,12 +59,19 @@ try {
 
     masterArray = masterArray.flat(1);
 
-    sortByGenderThenLastName(masterArray);
+    //COMMENT ONE OF THE FOUR FOLLOWING LINES IN TO DETERMINE SORTING METHOD
+    // masterArray = sortByGenderThenLastName(masterArray);
+    // masterArray = sortByDate(masterArray);
+    // masterArray = sortByLastNameDescending(masterArray);
+    // masterArray = sortByLastNameAscending(masterArray);
+
+    console.log(masterArray)
 
 } catch (e) {
     console.log('Error:', e.stack);
 }
 
+// this method sorts rows by gender (females first), then by last name a - z
 function sortByGenderThenLastName(inData) {
     // create empty arrays that we will add to
     let femaleArray = [];
@@ -80,19 +87,20 @@ function sortByGenderThenLastName(inData) {
     });
 
     // sort female array by last name
-    femaleArray = sortByLastName(femaleArray);
+    femaleArray = sortByLastNameAscending(femaleArray);
 
     // sort male array by last name
-    maleArray = sortByLastName(maleArray);
+    maleArray = sortByLastNameAscending(maleArray);
 
     // concatenate male and female array, females first
     const joinedSortedArray = femaleArray.concat(maleArray);
 
-    console.log("joined ", joinedSortedArray);
+    // return
     return joinedSortedArray;
 };
 
-function sortByLastName(inData){
+// this method sorts data rows by last name a -> z
+function sortByLastNameAscending(inData){
     // sort male array by last name
     inData.sort(function (a, b) {
         let lastName1 = a[0];
@@ -105,7 +113,57 @@ function sortByLastName(inData){
     return inData;
 }
 
-function sortByDate(inData){
+// this method sorts data rows by last name z -> a
+function sortByLastNameDescending(inData){
+    // sort male array by last name
+    inData.sort(function (a, b) {
+        let lastName1 = a[0];
+        let lastName2 = b[0];
 
+        // sort returns boolean values, so compare the names and set which one should go first
+        return lastName1 < lastName2 ? 1 : -1;
+    });
+
+    return inData;
+}
+
+// this method sorts by data, earliest first
+function sortByDate(inData){
+    inData.sort(function( a, b){
+        let firstDate = a[4];
+        let firstYear = firstDate.slice(-4);
+        
+        let secondDate = b[4];
+        let secondYear = secondDate.slice(-4);
+
+        if (firstYear === secondYear){
+            // if here the years are the same, so check month
+            let firstMonth = firstDate.slice(0, 2);
+            let secondMonth = secondDate.slice(0, 2);
+
+            if (firstMonth == secondMonth){
+                // if here, months are the same, so check day
+                let firstDay = firstDate.slice(firstDate.indexOf('-') + 1, firstDate.indexOf('-') + 3);
+                let secondDay = secondDate.slice(secondDate.indexOf('-') +1, secondDate.indexOf('-') + 3);
+
+                // if they're the same day, just return zero
+                if (firstDay == secondDay) return 0;
+
+                // return the earlier day
+                return firstDay < secondDay ? 1 : -1;
+
+            } else {
+                // if here return the earlier month
+                return firstMonth < secondMonth ? 1 : -1;
+            }
+
+        } else {
+            // return the earlier year first
+            return firstYear < secondYear ? 1 : -1;
+        }
+    });
+
+    // return
+    return inData;
 }
 
