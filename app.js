@@ -69,7 +69,7 @@ try {
 
     formatDateForConsole(masterArray);
 
-    console.log(masterArray)
+    // console.log(masterArray)
 } catch (e) {
     console.log('Error:', e.stack);
 }
