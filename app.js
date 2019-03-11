@@ -65,11 +65,45 @@ try {
     // masterArray = sortByLastNameDescending(masterArray);
     // masterArray = sortByLastNameAscending(masterArray);
 
-    console.log(masterArray)
+    formatDateForConsole(masterArray);
 
+    console.log(masterArray)
 } catch (e) {
     console.log('Error:', e.stack);
 }
+
+// this method with remove zeroes in day and month of date string going from 03-07-1979 to 3/7/1979
+function formatDateForConsole(inData){
+
+    inData.forEach(el => {
+        // pop date string from end of array
+        let date = el.pop();
+
+        // get rid of dashes
+        date = date.split('-');
+
+        // get day, month, year
+        let month = date[0];
+        let day = date[1];
+        let year = date[2];
+
+        // get first digits of month and day
+        let firstDigitOfMonth = month[0];
+        let firstDigitOfDay = day[0];
+        let secondDigitOfDay = day[1];
+
+        // check for preceding zeroes in month and day strings.  If found, reset string to just the second digit
+        //   (e.g. '07' becomes '7' for July)
+        if (firstDigitOfMonth == '0') month = month[1];
+        if (firstDigitOfDay == '0') day = day[1];
+
+        let formattedDate = month + "/" + day + "/" + year; 
+
+        // add the new date string to the end of the array
+        el.push(formattedDate);
+    });    
+}
+
 
 // this method sorts rows by gender (females first), then by last name a - z
 function sortByGenderThenLastName(inData) {
@@ -166,4 +200,5 @@ function sortByDate(inData){
     // return
     return inData;
 }
+
 
