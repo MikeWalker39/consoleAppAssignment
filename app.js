@@ -67,6 +67,9 @@ try {
     masterArray = sortByLastNameDescending(masterArray);
     // masterArray = sortByLastNameAscending(masterArray);
 
+    console.log("THIS   MASTERARRAY BEFORE FORMAT   ", masterArray);
+
+
     formatDateForConsole(masterArray);
 
     console.log(masterArray)
@@ -76,7 +79,6 @@ try {
 
 // this method with remove zeroes in day and month of date string going from 03-07-1979 to 3/7/1979
 function formatDateForConsole(inData){
-
     inData.forEach(el => {
         // pop date string from end of array
         let date = el.pop();
@@ -104,6 +106,8 @@ function formatDateForConsole(inData){
         // add the new date string to the end of the array
         el.push(formattedDate);
     });    
+
+    return inData;
 }
 
 
@@ -203,4 +207,11 @@ function sortByDate(inData){
     return inData;
 }
 
+module.exports = {
+    formatDateForConsole,
+    sortByDate,
+    sortByGenderThenLastName,
+    sortByLastNameAscending,
+    sortByLastNameDescending
+}
 
