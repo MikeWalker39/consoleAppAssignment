@@ -7,6 +7,9 @@
     "type": "git",
     "url": "git+https://github.com/MikeWalker39/consoleAppAssignment.git"
   },
+  "scripts": {
+    "test": "mocha"
+  },
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -17,6 +20,7 @@
     "work": "./app.js"
   },
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "mocha": "^6.0.2"
   }
 }
