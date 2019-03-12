@@ -67,12 +67,8 @@ try {
     masterArray = sortByLastNameDescending(masterArray);
     // masterArray = sortByLastNameAscending(masterArray);
 
-    console.log("THIS   MASTERARRAY BEFORE FORMAT   ", masterArray);
-
-
     formatDateForConsole(masterArray);
 
-    console.log(masterArray)
 } catch (e) {
     console.log('Error:', e.stack);
 }
