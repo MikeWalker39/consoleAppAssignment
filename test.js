@@ -2,14 +2,6 @@ const assert = require('assert');
 const app = require('./app.js');
 const fs = require('fs');
 
-describe('Array', function () {
-  describe('#indexOf()', function () {
-    it('should return -1 when the value is not present', function () {
-      assert.equal(-1, [1, 2, 3].indexOf(4));
-    });
-  });
-});
-
 describe('FormatDate', function () {
   it('should return a date formatted as M/D/YYYY (e.g. March 7th, 1979 would be 3/7/1979)',
     function () {
