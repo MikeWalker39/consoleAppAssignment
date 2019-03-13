@@ -1,5 +1,7 @@
 const fs = require('fs');
 
+var postmanArray = [];
+
 readSortLogToConsole();
 
 function readSortLogToConsole(){
@@ -33,7 +35,7 @@ function readSortLogToConsole(){
     
         formatDateForConsole(masterArray);
     
-        console.log(masterArray);
+        // console.log(masterArray);
     
         return masterArray;
     
@@ -113,7 +115,7 @@ function formatDateForConsole(inArray) {
         // check for preceding zeroes in month and day strings.  If found, reset string to just the second digit
         //   (e.g. '07' becomes '7' for July)
         if (firstDigitOfMonth == '0') month = month[1];
-        if (firstDigitOfDay == '0') day = day[1];
+        if (firstDigitOfDay == '0') day = secondDigitOfDay;
 
         let formattedDate = month + "/" + day + "/" + year;
 
@@ -227,5 +229,6 @@ var methods = module.exports = {
     sortByGenderThenLastName,
     sortByLastNameAscending,
     sortByLastNameDescending,
-    compileArray
+    compileArray,
+    postmanArray
 };
