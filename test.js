@@ -1,6 +1,11 @@
 const assert = require('assert');
 const app = require('./app.js');
 const fs = require('fs');
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+chai.use(chaiHttp);
+const server = require('./index.js');
+const should = require('should');
 
 describe('FormatDate', function () {
   it('should return a date formatted as M/D/YYYY (e.g. March 7th, 1979 would be 3/7/1979)',
@@ -24,7 +29,7 @@ describe('Read file, return array without delimiters', function () {
       // get the number of data rows in the file
       let totalLinesInFile = data.toString().split('\n').length;
       let testArray = app.compileArray(data);
-      ;
+
 
       describe('length of outer array', function () {
         it("returns an array with the same length as the data file", function () {
@@ -44,3 +49,48 @@ describe('Read file, return array without delimiters', function () {
       });
     });
 });
+
+describe('test', function () {
+  before(function () {
+    chai.request(server)
+      .post('/records')
+      .send({
+        records: 'CAMPBELL PHIL MALE ORANGE 03-23-1961\nPARKER ALEX MALE PINK 06-17-1967\nMITCHELL LAURA FEMALE BLUE 04-15-1969\nPEREZ KATHERINE FEMALE ORANGE 09-30-1973'
+      })
+
+      .end((err, res) => { done() });
+  });
+
+  it('should get records from /records/gender', function (done) {
+    chai.request(server)
+      .get('/records/gender')
+      .end(function (err, res) {
+        should.exist(res.body);
+        res.body.should.have.property('results');
+
+        done();
+      });
+  });
+
+  it('should get records from /records/name', function (done) {
+    chai.request(server)
+      .get('/records/name')
+      .end(function (err, res) {
+        should.exist(res.body);
+        res.body.should.have.property('results');
+
+        done();
+      });
+  });
+
+  it('should get records from /records/nameDescending', function (done) {
+    chai.request(server)
+      .get('/records/nameDescending')
+      .end(function (err, res) {
+        should.exist(res.body);
+        res.body.should.have.property('results');
+
+        done();
+      });
+  });
+})

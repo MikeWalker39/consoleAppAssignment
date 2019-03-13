@@ -18,8 +18,11 @@
   "homepage": "https://github.com/MikeWalker39/consoleAppAssignment#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
     "express": "^4.16.4",
     "mocha": "^6.0.2",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "should": "^13.2.3"
   }
 }

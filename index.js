@@ -1,11 +1,11 @@
 const express = require('express');
-const app = express();
+const server = express();
 const bodyParser = require('body-parser');
 const methods = require('./app.js');
 
-app.use(bodyParser.json());
+server.use(bodyParser.json());
 
-app.post("/records", (req, res) => {
+server.post("/records", (req, res) => {
     // convert data into array without delimiters
     let compiledArray = methods.compileArray(req.body.records);
     // convert dates from MM-DD-YYYY to requested format M/D/YYYY
@@ -17,44 +17,46 @@ app.post("/records", (req, res) => {
     }
 
     // set local records
-    app.locals.records = methods.postmanArray;
+    server.locals.records = methods.postmanArray;
 
     // log to console
-    console.log("ALL RECORDS", app.locals.records);
+    console.log("ALL RECORDS", server.locals.records);
 });
 
-app.get('/records/birthdate', (req, res) => {
+server.get('/records/birthdate', (req, res) => {
     // sort records by date
-    let sortedArray = methods.sortByDate(app.locals.records);
+    let sortedArray = methods.sortByDate(server.locals.records);
     res.json({
         "results": sortedArray
     });
 });
 
-app.get("/records/gender", (req, res) => {
+server.get("/records/gender", (req, res) => {
     // sort records
-    let sortedArray = methods.sortByGenderThenLastName(app.locals.records);
+    let sortedArray = methods.sortByGenderThenLastName(server.locals.records);
     res.json({
         "results": sortedArray
     });
 });
 
-app.get("/records/name", (req, res) => {
+server.get("/records/name", (req, res) => {
     // sort records by last name a -> z
-    let sortedArray = methods.sortByLastNameAscending(app.locals.records);
+    let sortedArray = methods.sortByLastNameAscending(server.locals.records);
     res.json({
         "results": sortedArray
     });
 });
 
-app.get("/records/nameDescending", (req, res) => {
+server.get("/records/nameDescending", (req, res) => {
     // sort records by last name z -> a
-    let sortedArray = methods.sortByLastNameDescending(app.locals.records);
+    let sortedArray = methods.sortByLastNameDescending(server.locals.records);
     res.json({
         "results": sortedArray
     });
 });
 
-app.listen(3000, () => {
+server.listen(3000, () => {
     console.log("Server running on port 3000");
 });
+
+module.exports = server;
