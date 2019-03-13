@@ -58,21 +58,3 @@ app.get("/records/nameDescending", (req, res) => {
 app.listen(3000, () => {
     console.log("Server running on port 3000");
 });
-
-/*
-// below are testable chunks for json posts on postman
-
-{
-"records": "SMITH|JAMES|MALE|BLUE|12-09-1946|\nJOHNSON|JOHN|MALE|GREEN|11-04-1955|\nCARTER AMY FEMALE PURPLE 09-18-1964"
-}
-
-{
-"records": "CAMPBELL PHIL MALE ORANGE 03-23-1961\nPARKER ALEX MALE PINK 06-17-1967\nMITCHELL LAURA FEMALE BLUE 04-15-1969\nPEREZ KATHERINE FEMALE ORANGE 09-30-1973"
-}
-
-{
-"records": "STEWART,JIMMY,MALE,YELLOW,10-09-1958,\nSANCHEZ,GARY,MALE,PINK,07-18-1991,\nMORRIS,JANICE,FEMALE,BLUE,05-01-1983,\nROGERS,KRISSY,FEMALE,PINK,01-19-1977,"
-}
-
-
-*/

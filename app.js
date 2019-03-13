@@ -29,13 +29,13 @@ function readSortLogToConsole(){
     
         //COMMENT ONE OF THE FOUR FOLLOWING LINES IN TO DETERMINE SORTING METHOD
         // masterArray = sortByGenderThenLastName(masterArray);
-        masterArray = sortByDate(masterArray);
+        // masterArray = sortByDate(masterArray);
         // masterArray = sortByLastNameDescending(masterArray);
         // masterArray = sortByLastNameAscending(masterArray);
     
         formatDateForConsole(masterArray);
     
-        // console.log(masterArray);
+        console.log(masterArray);
     
         return masterArray;
     
@@ -46,9 +46,8 @@ function readSortLogToConsole(){
 
 // 
 function compileArray(inData) {
-
+    // split data into array at the end of each line
     const arr = inData.split('\n');
-
     // go through the strings, cut out suffixes
     const cleanArr = arr.map(function (el) {
 
