@@ -4,89 +4,79 @@ var postmanArray = [];
 
 readSortLogToConsole();
 
-function readSortLogToConsole(){
+function readSortLogToConsole() {
     try {
         // get the file names
         const filenames = process.argv.splice(2);
-    
+
         let masterArray = [];
-    
+
         // go through each file, format data so we can sort and display it
         filenames.forEach(file => {
             // get the data
             const data = fs.readFileSync(file, 'utf8');
             // split the strings into an array of strings
-    
+
             let cleanArr = compileArray(data);
-    
+
             // add the cleaned array to master array
             masterArray.push(cleanArr);
-    
+
         });
-    
+
         // flatten to arrays within one parent array
         masterArray = masterArray.flat(1);
-    
-        //COMMENT ONE OF THE FOUR FOLLOWING LINES IN TO DETERMINE SORTING METHOD
-        // masterArray = sortByGenderThenLastName(masterArray);
-        // masterArray = sortByDate(masterArray);
-        // masterArray = sortByLastNameDescending(masterArray);
-        // masterArray = sortByLastNameAscending(masterArray);
-    
+
+        // format date
         formatDateForConsole(masterArray);
-    
-        console.log(masterArray);
-    
+
+        // log results
+        console.log("SORTED BY GENDER, THEN LAST NAME A -> Z");
+        console.log(sortByGenderThenLastName(masterArray));
+        console.log("       **************************************");
+
+        console.log("SORTED BY AGE, OLDEST TO YOUNGEST");
+        console.log(sortByDate(masterArray));
+        console.log("       **************************************");
+
+        console.log("SORTED BY LAST NAME, Z -> A")
+        console.log(sortByLastNameDescending(masterArray));
+
         return masterArray;
-    
     } catch (e) {
         console.log('Error:', e.stack);
     }
 }
-
-// 
+ 
 function compileArray(inData) {
     // split data into array at the end of each line
     const arr = inData.split('\n');
+
     // go through the strings, cut out suffixes
     const cleanArr = arr.map(function (el) {
 
-        // for comma delimited strings
-        if (el.indexOf(',') > -1) {
-            el = el.split(',');
-            let lastItem = el[el.length - 1];
-            if (lastItem === "\\" || lastItem === "") el.pop();
+        // create a specialChar to replace commas, pipes or spaces in each object
+        let specialChar;
+        specialChar = el.indexOf(',') > -1 ? "," : null;
+        specialChar = el.indexOf('|') > -1 ? "|" : specialChar;
+        specialChar = el.indexOf(' ') > -1 ? " " : specialChar;
 
-            return el;
+        // split array by the delimiter
+        el = el.split(specialChar);
+        // remove non-informational values
+        let lastItem = el[el.length - 1];
+        if (lastItem === "\\" || lastItem === "") el.pop();
+
+        // here, we have five pieces of info about the element, so make an object
+        let entry = {
+            'first_name': el[1],
+            'last_name': el[0],
+            'gender': el[2],
+            'fav_color': el[3],
+            'dob': el[4]
         }
 
-        // for space delimited strings
-        if (el.indexOf(' ') > -1) {
-            el = el.split(' ');
-
-            // get the last item in the array
-            let lastItem = el[el.length - 1];
-
-            // if last item is not data, pop it off
-            if (lastItem === "" || lastItem === "\\") {
-                el.pop();
-            }
-            return el;
-        }
-
-        // for pipe delimited strings
-        if (el.indexOf('|') > -1) {
-            el = el.split('|');
-
-            // get the last item in the array
-            let lastItem = el[el.length - 1];
-
-            // if the last item is not data, pop it off
-            if (lastItem === "" || lastItem === "\\") {
-                el.pop();
-            }
-            return el;
-        }
+        return entry;
     });
 
     return cleanArr;
@@ -96,7 +86,7 @@ function compileArray(inData) {
 function formatDateForConsole(inArray) {
     inArray.forEach(el => {
         // pop date string from end of array
-        let date = el.pop();
+        let date = el.dob;
 
         // get rid of dashes
         date = date.split('-');
@@ -119,7 +109,7 @@ function formatDateForConsole(inArray) {
         let formattedDate = month + "/" + day + "/" + year;
 
         // add the new date string to the end of the array
-        el.push(formattedDate);
+        el.dob = formattedDate;
     });
 
     return inArray;
@@ -134,7 +124,7 @@ function sortByGenderThenLastName(inArray) {
 
     // separate the data by gender
     inArray.forEach(el => {
-        let currentGender = el[2];
+        let currentGender = el.gender;
 
         if (currentGender === "FEMALE") {
             femaleArray.push(el);
@@ -149,6 +139,7 @@ function sortByGenderThenLastName(inArray) {
 
     // concatenate male and female array, females first
     const joinedSortedArray = femaleArray.concat(maleArray);
+    console.log("JOINED", joinedSortedArray)
 
     // return
     return joinedSortedArray;
@@ -158,8 +149,8 @@ function sortByGenderThenLastName(inArray) {
 function sortByLastNameAscending(inData) {
     // sort male array by last name
     inData.sort(function (a, b) {
-        let lastName1 = a[0];
-        let lastName2 = b[0];
+        let lastName1 = a.last_name;
+        let lastName2 = b.last_name;
 
         // sort returns boolean values, so compare the names and set which one should go first
         return lastName1 > lastName2 ? 1 : -1;
@@ -172,8 +163,8 @@ function sortByLastNameAscending(inData) {
 function sortByLastNameDescending(inData) {
     // sort male array by last name
     inData.sort(function (a, b) {
-        let lastName1 = a[0];
-        let lastName2 = b[0];
+        let lastName1 = a.last_name;
+        let lastName2 = b.last_name;
 
         // sort returns boolean values, so compare the names and set which one should go first
         return lastName1 < lastName2 ? 1 : -1;
@@ -185,10 +176,10 @@ function sortByLastNameDescending(inData) {
 // this method sorts by data, earliest first
 function sortByDate(inData) {
     inData.sort(function (a, b) {
-        let firstDate = a[4];
+        let firstDate = a.dob;
         let firstYear = firstDate.slice(-4);
 
-        let secondDate = b[4];
+        let secondDate = b.dob;
         let secondYear = secondDate.slice(-4);
 
         if (firstYear === secondYear) {
@@ -214,7 +205,7 @@ function sortByDate(inData) {
 
         } else {
             // return the earlier year first
-            return firstYear < secondYear ? 1 : -1;
+            return firstYear > secondYear ? 1 : -1;
         }
     });
 
