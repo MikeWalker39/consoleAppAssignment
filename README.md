@@ -1,8 +1,5 @@
 # consoleAppAssignment
 The code currently runs with the following command: node app.js consoleAppCommaDelim consoleAppPipeDelim consoleAppSpaceDelim.  
-
-The sorting method can be changed in App.js by commenting / uncommenting lines 31-34
-
 The following pipe/space/comma delimited chunks can be used for Postman tests for routes
 
 {
