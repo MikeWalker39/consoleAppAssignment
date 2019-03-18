@@ -11,9 +11,17 @@ describe('FormatDate', function () {
   it('should return a date formatted as M/D/YYYY (e.g. March 7th, 1979 would be 3/7/1979)',
     function () {
       // reformat an array with a date in MM/DD/YY format
-      let testEntry = app.formatDateForConsole([['MITCHELL', 'LAURA', 'FEMALE', 'BLUE', '04-15-1969']]);
+      let entry = [{
+        'first_name': 'LAURA',
+        'last_name': 'MITCHELL',
+        'gender': 'FEMALE',
+        'fav_color': 'BLUE',
+        'dob': '04-15-1969'
+      }];
+
+      let test = app.formatDateForConsole(entry);
       // get the modified date string
-      let modifiedDate = testEntry[0].pop();
+      let modifiedDate = test[0].dob;
       // check if it is not in proper format - M/D/YYYY
       assert.equal('4/15/1969', modifiedDate);
     });
@@ -39,11 +47,11 @@ describe('Read file, return array without delimiters', function () {
         });
       });
 
-      describe('length of inner array', function () {
-        it("returns arrays with five items in it", function () {
+      describe('length of object values', function () {
+        it("returns objects with five object values", function () {
           // make sure each array has 5 items
           testArray.forEach(el => {
-            assert.equal(5, el.length);
+            assert.equal(5, Object.values(el).length);
           });
         });
       });

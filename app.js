@@ -1,7 +1,5 @@
 const fs = require('fs');
 
-var postmanArray = [];
-
 readSortLogToConsole();
 
 function readSortLogToConsole() {
@@ -55,7 +53,7 @@ function compileArray(inData) {
     // go through the strings, cut out suffixes
     const cleanArr = arr.map(function (el) {
 
-        // create a specialChar to replace commas, pipes or spaces in each object
+        // create a specialChar to replace commas, pipes or spaces in the string
         let specialChar;
         specialChar = el.indexOf(',') > -1 ? "," : null;
         specialChar = el.indexOf('|') > -1 ? "|" : specialChar;
@@ -219,6 +217,5 @@ var methods = module.exports = {
     sortByGenderThenLastName,
     sortByLastNameAscending,
     sortByLastNameDescending,
-    compileArray,
-    postmanArray
+    compileArray
 };

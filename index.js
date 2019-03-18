@@ -11,13 +11,10 @@ server.post("/records", (req, res) => {
     // convert dates from MM-DD-YYYY to requested format M/D/YYYY
     let formattedRecords = methods.formatDateForConsole(compiledArray);
 
-    // add each record to array in memory
-    for (let i = 0; i < formattedRecords.length; i++){
-        methods.postmanArray.push(formattedRecords[i]);
-    }
-
+    if (!server.locals.records) server.locals.records = [];      
+    
     // set local records
-    server.locals.records = methods.postmanArray;
+    server.locals.records.push(...formattedRecords);
 
     // log to console
     console.log("ALL RECORDS", server.locals.records);
