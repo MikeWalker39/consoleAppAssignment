@@ -1,5 +1,6 @@
 # consoleAppAssignment
-The code currently runs with the following command: node app.js consoleAppCommaDelim consoleAppPipeDelim consoleAppSpaceDelim.  
+The code currently runs with the following command: node app.js consoleAppCommaDelim consoleAppPipeDelim consoleAppSpaceDelim.
+
 The following pipe/space/comma delimited chunks can be used for Postman tests for routes
 
 {
